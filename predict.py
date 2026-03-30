@@ -7,7 +7,7 @@ from tensorflow.keras import layers, Model
 
 # Load models
 cnn_model = load_model('cnn_model.h5')
-lgb_model = joblib.load('lgb_model.pkl')
+lgb_model = joblib.load('lightgbm_mri_classifier.pkl')
 
 # EfficientNet feature extractor
 base_model = EfficientNetB0(weights='imagenet', include_top=False, input_shape=(224,224,3))
