@@ -1,4 +1,4 @@
-%%writefile app.py
+
 import streamlit as st
 from preprocess import preprocess_image
 from predict import predict_image
