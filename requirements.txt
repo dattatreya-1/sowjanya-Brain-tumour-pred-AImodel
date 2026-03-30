@@ -4,5 +4,6 @@ pandas
 scikit-learn
 lightgbm
 streamlit
+altair==4.2.2
 Pillow
 joblib
