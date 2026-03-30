@@ -1,11 +1,11 @@
-
 import numpy as np
-from tensorflow.keras.preprocessing import image
+from PIL import Image
 
 IMG_SIZE = 224
 
 def preprocess_image(img_path):
-    img = image.load_img(img_path, target_size=(IMG_SIZE, IMG_SIZE))
-    img_array = image.img_to_array(img) / 255.0
-    img_array = np.expand_dims(img_array, axis=0)
-    return img_array
+    img = Image.open(img_path).convert("RGB")
+    img = img.resize((IMG_SIZE, IMG_SIZE))
+    img = np.array(img) / 255.0
+    img = img.flatten().reshape(1, -1)
+    return img
