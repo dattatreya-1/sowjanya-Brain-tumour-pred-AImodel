@@ -5,23 +5,25 @@ from PIL import Image
 # Load model
 lgb_model = joblib.load('lgbm_model.joblib')
 
-class_names = ['glioma', 'meningioma', 'notumor', 'pituitary']
+# ✅ Correct class mapping
+class_names = ['Haemorrhagic', 'Ischemic', 'Normal']
 
-EXPECTED_FEATURES = lgb_model.n_features_in_  # 20480
+EXPECTED_FEATURES = lgb_model.n_features_in_  # should be 20480
 
 def preprocess_image(img_path):
+    # Convert to grayscale (same as training)
     img = Image.open(img_path).convert("L")
 
-    # 🔥 Adjust size to match feature count
-    # 20480 = 128 × 160
-    img = img.resize((160, 128))   # WIDTH, HEIGHT
+    # Resize EXACTLY to match training (20480 = 160×128)
+    img = img.resize((160, 128))  # (width, height)
 
+    # Normalize
     img = np.array(img) / 255.0
 
     # Flatten
     img = img.flatten()
 
-    # Safety check
+    # Ensure correct feature size
     if img.shape[0] != EXPECTED_FEATURES:
         img = img[:EXPECTED_FEATURES]
 
