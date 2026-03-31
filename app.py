@@ -3,7 +3,7 @@ from predict import predict_image
 from PIL import Image
 import tempfile
 
-st.title("Brain Stroke Prediction App")
+st.title("Brain Stroke Classification (BiLSTM Model)")
 
 uploaded_file = st.file_uploader("Upload MRI Image", type=["jpg","png","jpeg"])
 
@@ -14,6 +14,7 @@ if uploaded_file is not None:
     with tempfile.NamedTemporaryFile(delete=False, suffix=".jpg") as tmp:
         image.save(tmp.name, format="JPEG")
 
-        prediction = predict_image(tmp.name)
+        prediction, confidence = predict_image(tmp.name)
 
     st.success(f"Prediction: {prediction}")
+    st.write(f"Confidence: {confidence*100:.2f}%")
