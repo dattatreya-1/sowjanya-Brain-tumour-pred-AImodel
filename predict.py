@@ -3,7 +3,7 @@ from tensorflow.keras.models import load_model
 from PIL import Image
 
 # Load model (keep exact name)
-model = load_model('AI Model.h5')
+model = load_model('AI_Model.h5')
 
 class_names = ['Haemorrhagic', 'Ischemic', 'Normal']
 
