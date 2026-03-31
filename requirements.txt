@@ -1,4 +1,4 @@
-protobuf==3.20.3
+tensorflow-cpu==2.16.1
 numpy
 pandas
 scikit-learn
@@ -7,3 +7,4 @@ streamlit
 altair==4.2.2
 Pillow
 joblib
+protobuf==3.20.3
