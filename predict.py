@@ -4,15 +4,12 @@ from PIL import Image
 import tensorflow as tf
 from tensorflow.keras.applications import EfficientNetB0
 from tensorflow.keras.applications.efficientnet import preprocess_input
-from tensorflow.keras import layers, Model
 
-# Load LightGBM model
+# Load model
 lgb_model = joblib.load('lgbm_model.joblib')
 
-# Load EfficientNet
-base_model = EfficientNetB0(weights='imagenet', include_top=False, input_shape=(224,224,3))
-x = layers.GlobalAveragePooling2D()(base_model.output)
-feature_extractor = Model(inputs=base_model.input, outputs=x)
+# Load EfficientNet WITHOUT pooling
+feature_extractor = EfficientNetB0(weights='imagenet', include_top=False, input_shape=(224,224,3))
 
 class_names = ['glioma', 'meningioma', 'notumor', 'pituitary']
 
@@ -27,10 +24,11 @@ def preprocess_image(img_path):
 def predict_image(img_path):
     img = preprocess_image(img_path)
 
-    # Extract features
     features = feature_extractor.predict(img)
 
-    # Predict using LightGBM
+    # Flatten SAME as training
+    features = features.reshape(1, -1)
+
     pred = lgb_model.predict(features)
 
     return class_names[int(pred[0])]
