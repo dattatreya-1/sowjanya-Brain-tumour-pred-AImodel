@@ -5,7 +5,9 @@ from PIL import Image
 # Load model (keep exact name)
 from tensorflow.keras.models import load_model
 
-model = load_model('AI_Model.h5', compile=False)
+from tensorflow.keras.models import load_model
+
+model = load_model('model_final.keras')
 
 
 class_names = ['Haemorrhagic', 'Ischemic', 'Normal']
