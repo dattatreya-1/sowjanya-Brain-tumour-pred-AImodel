@@ -7,21 +7,25 @@ lgb_model = joblib.load('lgbm_model.joblib')
 
 class_names = ['glioma', 'meningioma', 'notumor', 'pituitary']
 
+EXPECTED_FEATURES = lgb_model.n_features_in_  # 20480
+
 def preprocess_image(img_path):
-    # Convert to grayscale (IMPORTANT)
     img = Image.open(img_path).convert("L")
 
-    # Resize EXACTLY like training
-    img = img.resize((128, 128))
+    # 🔥 Adjust size to match feature count
+    # 20480 = 128 × 160
+    img = img.resize((160, 128))   # WIDTH, HEIGHT
 
-    # Convert to array
-    img = np.array(img)
+    img = np.array(img) / 255.0
 
-    # Normalize (if you did during training)
-    img = img / 255.0
+    # Flatten
+    img = img.flatten()
 
-    # Flatten (VERY IMPORTANT)
-    img = img.flatten().reshape(1, -1)
+    # Safety check
+    if img.shape[0] != EXPECTED_FEATURES:
+        img = img[:EXPECTED_FEATURES]
+
+    img = img.reshape(1, -1)
 
     return img
 
