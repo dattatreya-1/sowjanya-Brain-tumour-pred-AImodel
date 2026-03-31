@@ -1,6 +1,4 @@
-
 import streamlit as st
-from preprocess import preprocess_image
 from predict import predict_image
 from PIL import Image
 import tempfile
@@ -18,14 +16,4 @@ if uploaded_file is not None:
 
         prediction = predict_image(tmp.name)
 
-    st.write(f"### Prediction: {prediction}")
-
-    # Save temp image
-    with tempfile.NamedTemporaryFile(delete=False) as tmp:
-        image.save(tmp.name)
-        img_array = preprocess_image(tmp.name)
-
-    cnn_class, lgb_class = predict_image(img_array)
-
-    st.write(f"### CNN Prediction: {cnn_class}")
-    st.write(f"### LightGBM Prediction: {lgb_class}")
+    st.success(f"Prediction: {prediction}")
