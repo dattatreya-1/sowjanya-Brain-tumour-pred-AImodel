@@ -3,7 +3,7 @@ from predict import predict_image
 from PIL import Image
 import tempfile
 
-st.title("Brain Tumor Detection App")
+st.title("Brain Stroke Prediction App")
 
 uploaded_file = st.file_uploader("Upload MRI Image", type=["jpg","png","jpeg"])
 
